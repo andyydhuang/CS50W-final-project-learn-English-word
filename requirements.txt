@@ -1,0 +1,12 @@
+django
+bidict
+bs4
+markdown
+markdownify
+requests
+typing_extensions
+simplemma
+langcodes
+PyQt5
+lxml
+openpyxl

@@ -1,0 +1,73 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Learning English Words{% endblock %}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'memorize/styles.css' %}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        {% block script %}
+        {% endblock %}
+    </head>
+    <body>
+        <section id="header" class="header" style="display: none;">
+            <nav>
+                <div class="nav-links" id="navLinks">
+                    <!--i class="fa fa-times"></i-->
+                    <i class="fa fa-times" hook-type="hide-menu"></i>
+                    <ul>
+                        <li><a href="" hook-type="home">HOME</a></li>
+                        {% if user.is_authenticated %}
+                            <li><a href="" hook-type="search">SEARCH</a></li>
+                            <li><a href="" hook-type="test">TEST</a></li>
+                            <li><a href="" hook-type="upload">UPLOAD</a></li>                        
+                            <li><a href="" hook-type="favorite">FAVORITE</a></li> 
+                            <li><a href="{% url 'logout' %}">LOG OUT</a></li>
+                            <li><a href="" hook-type="user-favorite" hook="req-username">{{ user.username }}</a></li>
+                        {% else %}
+                            <li><a href="{% url 'login' %}">LOG IN</a></li>
+                            <li><a href="{% url 'register' %}">REGISTER</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <i class="fa fa-bars" hook-type="show-menu"></i>
+            </nav>
+        <div class="text-box">
+            <h1></h1> 
+        </div>
+        </section>
+
+        <section class="feature" style="display: none;">
+            <h1>Features We Offer</h1>
+
+            <div class="row">
+                <div class="feature-col">
+                    <h3>Search</h3>
+                    <p>Find meanings and examples of words.</p>
+                </div>
+                <div class="feature-col">
+                    <h3>Test</h3>
+                    <p>Take a test from your or someone else's favorite words.</p>
+                </div>
+                <div class="feature-col">
+                    <h3>Upload</h3>
+                    <p>Upload file to extend your favorite words.</p>
+                </div>
+            </div>
+        </section>
+        
+        <div class="body">
+            {% block body %}
+            {% endblock %}
+        </div>
+
+    <script>
+       
+    </script>
+    </body>
+</html>

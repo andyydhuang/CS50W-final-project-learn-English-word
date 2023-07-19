@@ -1,0 +1,150 @@
+{% extends "memorize/base.html" %}
+{% load static %}
+
+{% block body %}
+    {% if type == "upload" %}
+        <div cur-hook-type="upload"></div>
+    {% else %}
+        <div cur-hook-type=""></div>
+    {% endif %}
+
+    <section class="search">
+        <!--h1>Search</h1-->
+        <div id="word-view" class="about-word">
+            <form id="search-form" class="search-form">
+                <input class="form-control" id="search-body" name="body"></input>
+                <input class="btn btn-primary" type="submit" hook-type="action-search" value="Search"></input>
+            </form>
+            <div class="row">
+                <div class="about-col">               
+                    <div id="word-info">
+                        <div id="modify-favor" hook-type="action-favor">
+                        </div>
+
+                        <div id="word"></div>
+                        <div id="defn"></div>
+                        <div id="audios"></div>
+                        <div id="mimgs" class="mimgs"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="test">
+        <div id="test-view" class="about-word">
+            <div id="test-view-1">
+                <div id="select-form">
+                    <form action=" " >
+                        <p>Hold down the Ctrl (windows) <br>
+                            button to select multiple users.</p>
+                        <select class="form-select" name="Users" multiple></select>
+                        <input class="btn btn-primary" type="submit" hook-type="action-tests-select" value="Submit">
+                    </form>
+
+                </div>
+            </div>
+            <div id="test-view-2">
+                <form id="answer-form" class="search-form">
+                    <input class="form-control" id="answer-body" name="body"></input>
+                    <input class="btn btn-primary" type="submit" hook-type="action-verify" value="Submit Answer"></input>
+                </form>
+                <div id="test-result">
+                    <i class="fa fa-pagelines fa-lg"><span></span></i>
+                    <i class="fa fa-envira fa-lg"><span></span></i>
+                </div>
+                <div id="test-buttons">
+                    <button class="border btn btn-sm" hook-type="action-next-test">
+                        <i class="fa fa-step-forward">
+                            <span style="font-weight: bold;"> Next</span>                            
+                        </i>
+                    </button>
+
+                    <button class="border btn btn-sm" hook-type="action-show-test-mimgs">
+                        <span style="font-weight: bold;">Show Images</span>
+                    </button>
+
+                    <button class="border btn btn-sm" hook-type="action-show-test-audios">
+                        <span style="font-weight: bold;">Show Audios</span>
+                    </button>
+
+                    <button class="border btn btn-sm" hook-type="action-show-test-ans">
+                        <span style="font-weight: bold;">Show Answer</span>
+                    </button>
+                </div>
+                <div id="word-info">
+                    <div id="word"></div>
+                    <div id="defn"></div>
+                    <div id="audios"></div>
+                    <div id="mimgs" class="mimgs"></div>
+                </div>
+            </div>
+            <div id="test-empty"></div>
+        </div>
+    </section>
+
+    <section class="upload">
+        <div class="about-word">
+            <form action="{% url 'handle_upload' %}" method="post" 
+                enctype="multipart/form-data"
+                id="upload-form"
+                class="search-form">
+                {% csrf_token %}
+                <input type="file"
+                    accept=".xlsx"
+                    title="Upload excel file"
+                    name="excel_file"
+                    required="required"
+                    class="form-control">
+                <input type="submit"
+                    value="Upload"
+                    hook-type="action-upload"
+                    class="btn btn-primary">
+            </form>
+            <p></p>
+            <hr>
+            {% if excel_data %}
+                <div id="upload-content-view">
+                    <h4>Uploaded Content</h4>
+                    {% for row in excel_data %}
+                        {% for cell in row %}
+                            {{ cell }}&nbsp;&nbsp;
+                        {% endfor %}
+                        <br>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <section class="favorite">
+        <div id="favorite-view" class="about-word">
+            <div id="favorite-view-1">
+                <div id="select-form">
+                    <form action=" " >
+                        <p>Hold down the Ctrl (windows) <br>
+                            button to select multiple users.</p>
+                        <select class="form-select" name="Users" multiple></select>
+                        <input class="btn btn-primary" type="submit" hook-type="action-favorites-select" value="Submit">
+                    </form>
+                </div>
+            </div>
+            <div id="favorite-view-2">
+                <div id="contents"></div>
+                
+                <div id="word-info">
+                    <div id="modify-favor" hook-type="action-favor">
+                    </div>
+                    <div id="word"></div>
+                    <div id="defn"></div>
+                    <div id="audios"></div>
+                    <div id="mimgs" class="mimgs"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'memorize/features.js' %}"></script>  
+{% endblock %}
